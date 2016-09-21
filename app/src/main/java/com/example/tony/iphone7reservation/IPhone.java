@@ -4,39 +4,34 @@ package com.example.tony.iphone7reservation;
  * Created by tony on 9/19/16.
  */
 
-import android.util.Log;
-
 import java.util.Map;
 
 public class IPhone {
 
-    private static final String TAG = "MyActivity";
-
     private String model;
     private String store;
     private String color;
-    private String size;
+    private int size;
+    private boolean plus;
 
-    public IPhone(String model,String store,Map<String,String> colorMap,Map<String,String> sizeMap) {
+    public IPhone(String model,String store,Map<String,String> colorMap,Map<String,String> sizeMap,Map<String,Boolean> plusMap) {
         this.model = model;
         this.store = store;
-        this.color = Color(colorMap,model);
-        this.size = Size(sizeMap,model);
+        this.color = color(colorMap,model);
+        this.size = size(sizeMap,model);
+        this.plus = plus(plusMap,model);
     }
 
-    private String Color(Map<String,String> colorMap, String model) {
+    private String color(Map<String,String> colorMap, String model) {
         return colorMap.get(model);
     }
 
-    private String Size(Map<String,String> sizeMap, String model) {
-        return sizeMap.get(model);
+    private int size(Map<String,String> sizeMap, String model) {
+        return Integer.parseInt(sizeMap.get(model));
     }
 
-    public void show() {
-        Log.d(TAG, this.model);
-        Log.d(TAG, this.store);
-        Log.d(TAG, this.color);
-        Log.d(TAG, this.size);
+    private Boolean plus(Map<String,Boolean> plusMap, String model) {
+        return plusMap.get(model);
     }
 
     public String getStore() {
@@ -47,7 +42,16 @@ public class IPhone {
         return this.color;
     }
 
-    public String getSize() {
+    public int getSize() {
         return this.size;
+    }
+
+    public String getPlus() {
+        return this.plus ? "plus" : "";
+    }
+
+    @Override
+    public String toString() {
+        return getColor() + " " + getSize() + " " + getPlus() + " " + getStore();
     }
 }
